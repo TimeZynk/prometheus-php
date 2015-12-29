@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/PrometheusException.php');
 require_once(dirname(__FILE__) . '/Metric.php');
 require_once(dirname(__FILE__) . '/Counter.php');
 require_once(dirname(__FILE__) . '/Gauge.php');
-require_once(dirname(__FILE__) . '/Metric.php');
+require_once(dirname(__FILE__) . '/Histogram.php');
 require_once(dirname(__FILE__) . '/Registry.php');
 
 class Client {
@@ -22,8 +22,6 @@ class Client {
 			throw new PrometheusException("Prometheus requires a base_uri option, which points to the pushgateway");
 
 		$this->base_uri = $options['base_uri'];
-
-		// TODO: Allow option for requiring http basic authentication
 	}
 
 	public function newCounter(array $opts = []) {
@@ -32,6 +30,10 @@ class Client {
 
 	public function newGauge(array $opts = []) {
 		return $this->register(new Gauge($opts));
+	}
+
+	public function newHistogram(array $opts = []) {
+		return $this->register(new Histogram($opts));
 	}
 
 	private function register(Metric $metric) {

@@ -60,6 +60,8 @@ abstract class Metric {
 		foreach ($this->values() as $val) {
 			list($labels, $value) = $val;
 			$label_pairs = [];
+			$suffix = isset($labels['__suffix']) ? $labels['__suffix'] : '';
+			unset($labels['__suffix']);
 
 			foreach ($labels as $k => $v) {
 				$v = str_replace("\"", "\\\"", $v);
@@ -69,7 +71,7 @@ abstract class Metric {
 				$label_pairs []= "$k=\"$v\"";
 			}
 
-			$tbr []= $this->full_name . "{" . implode(",", $label_pairs) . "} " . $value;
+			$tbr []= $this->full_name . $suffix . "{" . implode(",", $label_pairs) . "} " . $value;
 		}
 
 		return implode("\n", $tbr);
@@ -78,8 +80,6 @@ abstract class Metric {
 	protected function hashLabels(array $labels = []) {
 		$hash = md5(json_encode($labels, JSON_FORCE_OBJECT));
 		$this->labels[$hash] = $labels;
-		// TODO: save to memcached
-
 		return $hash;
 	}
 }
