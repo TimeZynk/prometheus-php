@@ -1,6 +1,8 @@
 <?php
 namespace Prometheus;
 
+require_once(dirname(__FILE__) . '/PrometheusException.php');
+
 class Registry {
 	private $metrics = [];
 

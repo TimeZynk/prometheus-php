@@ -1,6 +1,8 @@
 <?php
 namespace Prometheus;
 
+require_once(dirname(__FILE__) . '/PrometheusException.php');
+
 abstract class Metric {
 	protected $values = [];
 	protected $labels = [];
