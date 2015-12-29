@@ -15,13 +15,7 @@ class Client {
 
 	public function __construct(array $options = []) {
 		$this->registry = new Registry;
-
 		$this->options = $options;
-
-		if (empty($this->options['base_uri']))
-			throw new PrometheusException("Prometheus requires a base_uri option, which points to the pushgateway");
-
-		$this->base_uri = $options['base_uri'];
 	}
 
 	public function newCounter(array $opts = []) {
