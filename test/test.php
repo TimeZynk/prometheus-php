@@ -1,27 +1,25 @@
 <?php
-require_once 'vendor/autoload.php';
 
-$client = new Prometheus\Client([
-	'base_uri' => 'http://condor.louddev.com:9091',
-]);
+require_once dirname(__FILE__) . '/../src/Client.php';
+
+$client = new Prometheus\Client();
 
 $counter = $client->newCounter([
 	'namespace' => 'louddoor',
 	'subsystem' => 'promotions',
 	'name' => 'TestCounter',
-	'help' => 'Some testing bullshit',
+	'help' => 'Some testing counter',
 ]);
 
-$counter->increment(['promo' => 1]);
-$counter->increment(['promo' => 1]);
-$counter->increment(['promo' => 1]);
-$counter->increment(['promo' => 1]);
+$counter->increment(['promo' => 'ABC']);
+$counter->increment(['promo' => 'ABC']);
+$counter->increment(['promo' => 'ABC']);
+$counter->increment(['promo' => 'ABC']);
 
-$counter->increment(['promo' => 2]);
-$counter->increment(['promo' => 2]);
+$counter->increment(['promo' => 'CDE']);
+$counter->increment(['promo' => 'CDE']);
 
-$counter->increment(['promo' => 3]);
-$counter->increment(['promo' => 4]);
+$counter->increment(['promo' => 'EFG']);
+$counter->increment(['promo' => 'HIJ'], 3); // Increment by 3 instead
 
-$client->sendStats();
-
+print $client->serialize();
