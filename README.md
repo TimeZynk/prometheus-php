@@ -8,7 +8,7 @@ pushgateway or provide a HTTP endpoint where prometheus can access it.
 
 It implements three metric types: Gauge, Counter and Histogram. To use it, instantiate the Client class:
 
-```
+```PHP
 $client = new Prometheus\Client();
 
 $session_updated_ago = $client->newHistogram(array(
